@@ -1,4 +1,5 @@
 from email.mime import audio
+from tkinter import CENTER, LEFT
 import speech_recognition as sr
 import turtle
 import time
@@ -13,12 +14,17 @@ def takecommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         turtle.write("Waiting for command...(Hello)/(GoodBye)", font=("Arial",
-                                                                      20, "normal"), move=True)
+                                                                      20, "normal"), align=CENTER)
+
         audio = r.listen(source)
     try:
-        turtle.write("Recognizing...")
+        turtle.clear()
+        turtle.write("Recognizing...", font=(
+            "Arial", 20, "normal"), align=CENTER)
         query = r.recognize_google(audio, language='en')
-        turtle.write(f"You said: {query}")
+        turtle.clear()
+        turtle.write(f"You said: {query}", font=("Arial",
+                                                 20, "normal"), align=CENTER)
         with open("recordedaudio.wav", "wb") as f:
             f.write(audio.get_wav_data())
     except Exception as e:
@@ -30,10 +36,16 @@ def takecommand():
 def main():
     querry = takecommand()
 
-    if "Hello" in querry:
-        turtle.write("Hello Sir!")
+    if "hello" in querry:
+        turtle.clear()
+        turtle.write("Hello Sir!", font=("Arial",
+                                         20, "normal"), align=CENTER)
     else:
         pass
+    if "goodbye" in querry:
+        turtle.clear()
+        turtle.write("Bye have a nice day", font=("Arial",
+                                                  20, "normal"), align=CENTER)
 
 
 if __name__ == "__main__":
