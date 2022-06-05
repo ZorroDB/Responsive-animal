@@ -12,7 +12,8 @@ wn.bgcolor("grey")
 def takecommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        turtle.write("Waiting for command...(Hello)/(GoodBye)")
+        turtle.write("Waiting for command...(Hello)/(GoodBye)", font=("Arial",
+                                                                      20, "normal"), move=True)
         audio = r.listen(source)
     try:
         turtle.write("Recognizing...")
