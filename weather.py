@@ -1,16 +1,31 @@
 import requests
 from config import API_KEY
-from savedPhrases import takecommand
+import savedPhrases
 
+api_key = API_KEY  # Enter the API key you got from the OpenWeatherMap website
+base_url = "http://api.openweathermap.org/data/2.5/weather?"
 
-# <------- GETTING API KEY FROM WEATHER AND IMPLYING IT---->
+if "what is the weather" in querry:
+    querry = savedPhrases.takecommand()
+    city_name = input("Enter city name : ")
+    # This is to complete the base_url, you can also do this manually to checkout other weather data available
+    complete_url = base_url + "appid=" + \
+        'd850f7f52bf19300a9eb4b0aa6b80f0d' + "&q=" + city_name
+    response = requests.get(complete_url)
+    x = response.json()
 
-# Enter the API key you got from the OpenWeatherMap website
+    if x["cod"] != "404":
+        y = x["main"]
 
+        current_temperature = y["temp"]
+        z = x["weather"]
 
-# def main():
+        weather_description = z[0]["description"]
 
-# querry = takecommand()
-# if "What is the weather" in querry:
+        print(" Temperature = " +
+              str(current_temperature) +
+              "\n description = " +
+              str(weather_description))
 
-# api_key = API_KEY
+    else:
+        print(" City Not Found ")
