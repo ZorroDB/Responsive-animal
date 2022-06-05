@@ -1,22 +1,38 @@
 from email.mime import audio
 import speech_recognition as sr
+import turtle
+import time
+
+
+wn = turtle.Screen()
+wn.title("Responsive test")
+wn.bgcolor("grey")
+
+
+def takecommand():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        turtle.write("Waiting for command...(Hello)/(GoodBye)")
+        audio = r.listen(source)
+    try:
+        turtle.write("Recognizing...")
+        query = r.recognize_google(audio, language='en')
+        turtle.write(f"You said: {query}")
+        with open("recordedaudio.wav", "wb") as f:
+            f.write(audio.get_wav_data())
+    except Exception as e:
+        return "none"
+    query = query.lower()
+    return query
 
 
 def main():
-    r = sr.Recognizer()
+    querry = takecommand()
 
-    with sr.Microphone() as source:
-        r.adjust_for_ambient_noise(source)
-
-        print("Please say something..")
-
-        audio = r.listen(source)
-
-        try:
-            print("You have said : \n " + r.recognize_google(audio))
-
-        except Exception as e:
-            print("Error : " + str(e))
+    if "Hello" in querry:
+        turtle.write("Hello Sir!")
+    else:
+        pass
 
 
 if __name__ == "__main__":
